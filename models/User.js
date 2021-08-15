@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema(
   {
@@ -22,21 +22,22 @@ const UserSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
-      default: "",
+      default: '',
     },
     friends: {
       type: Array,
       default: [],
     },
-    groups:{
+    groups: {
       type: Array,
       default: [],
     },
     state: {
       type: String,
-      max: 50},
+      max: 50,
+    },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);

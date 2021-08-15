@@ -3,6 +3,8 @@ const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
+var cors = require('cors');
+app.use(cors());
 const {
   getAllMessage,
   sendMessage,
@@ -13,6 +15,8 @@ const {
 } = require('./controller/conversations.controller');
 
 const { registerUser, login } = require('./controller/auth.controller');
+
+const { getUsers } = require('./controller/users.controller');
 dotenv.config();
 
 mongoose.connect(
@@ -26,13 +30,15 @@ mongoose.connect(
 app.use(express.json());
 
 app.post('/send', sendMessage);
-app.get('/:conversationId', getAllMessage);
+app.get('/message/:conversationId', getAllMessage);
 
 app.post('/addcon', addConversation);
-app.get('/:userId', getConversation);
+app.get('/conv/:userId', getConversation);
 
 app.post('/register', registerUser);
 app.post('/login', login);
+
+app.get('/getUsers', getUsers);
 
 app.listen(8080, () => {
   console.log('Backend server is running!');
