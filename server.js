@@ -3,8 +3,14 @@ const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
-var cors = require('cors');
-app.use(cors());
+
+const multer = require("multer");
+const cors = require('cors')
+
+ 
+app.use(cors())
+ 
+
 const {
   getAllMessage,
   sendMessage,
@@ -20,14 +26,28 @@ const { getUsers } = require('./controller/users.controller');
 dotenv.config();
 
 mongoose.connect(
-  'mongodb+srv://ltuc:12345@hola.jglzb.mongodb.net/chatapp?retryWrites=true&w=majority',
+  'mongodb+srv://deyaa-pozan:ltuc123456@node-rest-shop.96va2.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-v5f0re-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true',
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => {
     console.log('Connected to MongoDB');
   }
 );
-
+mongoose.set('useCreateIndex', true);
 app.use(express.json());
+
+app.use('/uploads', express.static('uploads'));
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "./uploads");
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now()+"-"+file.originalname);
+    },
+  });
+  
+  const upload = multer({ storage: storage });
+
 
 app.post('/send', sendMessage);
 app.get('/message/:conversationId', getAllMessage);
@@ -35,7 +55,7 @@ app.get('/message/:conversationId', getAllMessage);
 app.post('/addcon', addConversation);
 app.get('/conv/:userId', getConversation);
 
-app.post('/register', registerUser);
+app.post('/register',upload.single("img"), registerUser);
 app.post('/login', login);
 
 app.get('/getUsers', getUsers);

@@ -34,9 +34,11 @@ const UserSchema = new mongoose.Schema(
     },
     state: {
       type: String,
-      max: 50,
     },
+    img:String
+
   },
+ 
   { timestamps: true }
 );
 
