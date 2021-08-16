@@ -7,7 +7,7 @@ const registerUser = async (req, res) => {
   console.log(req.file.filename);
   console.log(req.body);
   try {
-    //generate new password
+    // generate new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
     
@@ -22,6 +22,7 @@ const registerUser = async (req, res) => {
 
     //save user and respond
     const user = await newUser.save();
+
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err.message);
@@ -37,6 +38,7 @@ const login = async (req, res) => {
       req.body.password,
       user.password
     );
+    console.log(req.body.password);
     !validPassword && res.status(400).json('wrong password');
 
     res.status(200).json(user);
