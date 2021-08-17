@@ -4,12 +4,10 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
 
-const multer = require("multer");
-const cors = require('cors')
+const multer = require('multer');
+const cors = require('cors');
 
- 
-app.use(cors())
- 
+app.use(cors());
 
 const {
   getAllMessage,
@@ -18,11 +16,12 @@ const {
 const {
   addConversation,
   getConversation,
+  getfreindscov,
 } = require('./controller/conversations.controller');
 
 const { registerUser, login } = require('./controller/auth.controller');
 
-const { getUsers } = require('./controller/users.controller');
+const { getUsers, getfriend } = require('./controller/users.controller');
 dotenv.config();
 
 mongoose.connect(
@@ -38,27 +37,28 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "./uploads");
-    },
-    filename: (req, file, cb) => {
-      cb(null, Date.now()+"-"+file.originalname);
-    },
-  });
-  
-  const upload = multer({ storage: storage });
+  destination: (req, file, cb) => {
+    cb(null, './uploads');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
 
+const upload = multer({ storage: storage });
 
 app.post('/send', sendMessage);
 app.get('/message/:conversationId', getAllMessage);
 
 app.post('/addcon', addConversation);
 app.get('/conv/:userId', getConversation);
+app.get('/conv/find/:firstUserId/:secondUserId', getfreindscov);
 
-app.post('/register',upload.single("img"), registerUser);
+app.post('/register', upload.single('img'), registerUser);
 app.post('/login', login);
 
 app.get('/getUsers', getUsers);
+app.get('/friends', getfriend);
 
 app.listen(8080, () => {
   console.log('Backend server is running!');

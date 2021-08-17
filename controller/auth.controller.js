@@ -4,20 +4,19 @@ const bcrypt = require('bcrypt');
 //REGISTER
 
 const registerUser = async (req, res) => {
-  console.log(req.file.filename);
+  // console.log(req.file.filename);
   console.log(req.body);
   try {
     // generate new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    
 
     //create new user
     const newUser = new User({
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword,
-      img:"uploads/"
+      img: 'uploads/',
     });
 
     //save user and respond
