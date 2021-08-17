@@ -2,12 +2,14 @@ const Conversation = require('../models/Conversation');
 
 //new conv
 const addConversation = async (req, res) => {
+  console.log(req.body.receiverId);
   const newConversation = new Conversation({
     members: [req.body.senderId, req.body.receiverId],
   });
 
   try {
     const savedConversation = await newConversation.save();
+    console.log(savedConversation);
     res.status(200).json(savedConversation);
   } catch (err) {
     res.status(500).json(err);
