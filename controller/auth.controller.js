@@ -6,14 +6,11 @@ const crypto = require('crypto');
 //REGISTER
 
 const registerUser = async (req, res) => {
-  console.log("register");
-  console.log(req.file.filename);
 
   try {
     // generate new password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    
 
     //create new user
     const newUser = new User({
@@ -21,6 +18,7 @@ const registerUser = async (req, res) => {
       email: req.body.email,
       password: hashedPassword,
       img:"uploads/"+req.file.filename
+
     });
 
     //save user and respond
