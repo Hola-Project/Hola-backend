@@ -35,8 +35,8 @@ const UserSchema = new mongoose.Schema(
     state: {
       type: String,
     },
+    isVerified: { type: Boolean, default: false },
     img:String
-
   },
  
   { timestamps: true }

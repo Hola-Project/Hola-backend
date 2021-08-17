@@ -3,11 +3,11 @@ const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
+const multer = require("multer");
+const cors = require('cors')
+app.use(cors())
+ 
 
-const multer = require('multer');
-const cors = require('cors');
-
-app.use(cors());
 
 const {
   getAllMessage,
@@ -21,7 +21,12 @@ const {
 
 const { registerUser, login } = require('./controller/auth.controller');
 
+
+
+const {confirmationPost}= require('./controller/verification')
+
 const { getUsers, getfriend } = require('./controller/users.controller');
+
 dotenv.config();
 
 mongoose.connect(
@@ -59,6 +64,10 @@ app.post('/login', login);
 
 app.get('/getUsers', getUsers);
 app.get('/friends', getfriend);
+
+
+//confirmationPost
+app.get('/confirmation/:token', confirmationPost)
 
 app.listen(8080, () => {
   console.log('Backend server is running!');
