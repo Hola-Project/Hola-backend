@@ -3,11 +3,8 @@ const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
-
 const multer = require("multer");
 const cors = require('cors')
-
- 
 app.use(cors())
  
 
@@ -23,6 +20,8 @@ const {
 const { registerUser, login } = require('./controller/auth.controller');
 
 const { getUsers } = require('./controller/users.controller');
+
+const {confirmationPost}= require('./controller/verification')
 dotenv.config();
 
 mongoose.connect(
@@ -59,6 +58,10 @@ app.post('/register',upload.single("img"), registerUser);
 app.post('/login', login);
 
 app.get('/getUsers', getUsers);
+
+
+//confirmationPost
+app.get('/confirmation/:token', confirmationPost)
 
 app.listen(8080, () => {
   console.log('Backend server is running!');
