@@ -12,6 +12,8 @@ app.use(cors())
 const {
   getAllMessage,
   sendMessage,
+  getUnReadMessage,
+  updateStatus
 } = require('./controller/messages.controller');
 const {
   addConversation,
@@ -54,6 +56,8 @@ const upload = multer({ storage: storage });
 
 app.post('/send', sendMessage);
 app.get('/message/:conversationId', getAllMessage);
+app.get('/getUnReadMessage/:conversationId', getUnReadMessage);
+app.put('/updateStatus/:conversationId', updateStatus);
 
 app.post('/addcon', addConversation);
 app.get('/conv/:userId', getConversation);
