@@ -27,6 +27,29 @@ const getAllMessage = async (req, res) => {
   }
 };
 
+const getUnReadMessage = async (req, res) => {
+  try {
+    const messages = await Message.find({
+      conversationId: req.params.conversationId,
+      seen:false
+    });
+    res.status(200).json(messages);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+
+const updateStatus = async (req, res) => {
+  try {
+   let result = await  Message.updateMany({conversationId: req.params.conversationId },{$set:{seen:true}})
+   console.log(req.params.conversationId);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 // router.post("/", async (req, res) => {
 //   const newMessage = new Message(req.body);
 
@@ -51,4 +74,4 @@ const getAllMessage = async (req, res) => {
 //   }
 // });
 
-module.exports = { getAllMessage, sendMessage };
+module.exports = { getAllMessage, sendMessage,getUnReadMessage,updateStatus };
