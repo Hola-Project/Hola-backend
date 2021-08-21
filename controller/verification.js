@@ -61,13 +61,13 @@ const resendTokenPost = async (req, res) => {
           service: 'gmail',
           port: 465,
           secure: true,
-          auth: { user: 'hola.ltuc@gmail.com,', pass: 'ltuc123456' },
+          auth: { user: process.env.EMAIL, pass: process.env.PASS },
           tls: { rejectUnauthorized: false },
         });
         console.log(transporter);
 
         var mailOptions = {
-          from: 'hola.ltuc@gmail.com,',
+          from: process.env.EMAIL,
           to: user.email,
           subject: 'Account Verification Token',
           text:
