@@ -50,6 +50,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+app.get('/', (req, res) => {
+  res.send('working good');
+});
+
 app.post('/send', sendMessage);
 app.get('/message/:conversationId', getAllMessage);
 app.get('/getUnReadMessage/:conversationId', getUnReadMessage);
