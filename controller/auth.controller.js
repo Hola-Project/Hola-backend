@@ -34,19 +34,16 @@ const registerUser = async (req, res) => {
         console.log('no token');
         return res.status(500).send({ msg: err.message });
       } else {
-        // Send the email
-        //  'deaiaa.test@gmail.com'
-        //  SMTP_PASSWORD= 'deyaa.1999'
         var transporter = nodemailer.createTransport({
           service: 'gmail',
           port: 465,
           secure: true,
-          auth: { user: 'deaiaa.test@gmail.com', pass: 'deyaa.1999' },
+          auth: { user: 'hola.ltuc@gmail.com', pass: 'ltuc123456' },
           tls: { rejectUnauthorized: false },
         });
 
         var mailOptions = {
-          from: 'deaiaa.test@gmail.com',
+          from: 'hola.ltuc@gmail.com',
           to: user.email,
           subject: 'Account Verification Token',
           text:

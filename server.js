@@ -3,17 +3,15 @@ const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
-const multer = require("multer");
-const cors = require('cors')
-app.use(cors())
- 
-
+const multer = require('multer');
+const cors = require('cors');
+app.use(cors());
 
 const {
   getAllMessage,
   sendMessage,
   getUnReadMessage,
-  updateStatus
+  updateStatus,
 } = require('./controller/messages.controller');
 const {
   addConversation,
@@ -23,16 +21,14 @@ const {
 
 const { registerUser, login } = require('./controller/auth.controller');
 
-
-
-const {confirmationPost}= require('./controller/verification')
+const { confirmationPost } = require('./controller/verification');
 
 const { getUsers, getfriend } = require('./controller/users.controller');
 
 dotenv.config();
 
 mongoose.connect(
-  'mongodb+srv://deyaa-pozan:ltuc123456@node-rest-shop.96va2.mongodb.net/myFirstDatabase?authSource=admin&replicaSet=atlas-v5f0re-shard-0&w=majority&readPreference=primary&appname=MongoDB%20Compass&retryWrites=true&ssl=true',
+  process.env.MONGO_URL,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => {
     console.log('Connected to MongoDB');
@@ -69,10 +65,9 @@ app.post('/login', login);
 app.get('/getUsers', getUsers);
 app.get('/friends', getfriend);
 
-
 //confirmationPost
-app.get('/confirmation/:token', confirmationPost)
+app.get('/confirmation/:token', confirmationPost);
 
-app.listen(8080, () => {
+app.listen(process.env.PORT, () => {
   console.log('Backend server is running!');
 });
